@@ -155,12 +155,6 @@ export function Header() {
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-
-          <Link href="/#contact">
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white" onClick={scrollToBottom}>
-              <Mail className="mr-2 h-4 w-4" /> Contact Us
-            </Button>
-          </Link>
         </div>
 
         {/* Mobile Navigation */}

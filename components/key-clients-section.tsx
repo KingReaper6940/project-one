@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import React, { useRef } from "react"
 
@@ -24,7 +26,7 @@ const clientImages = [
   "Screenshot 2025-05-14 at 10.29.36 PM.png",
 ]
 
-function useDraggableScroll(ref: React.RefObject<HTMLDivElement>) {
+function useDraggableScroll(ref: React.RefObject<HTMLDivElement | null>) {
   React.useEffect(() => {
     const el = ref.current
     if (!el) return

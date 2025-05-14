@@ -7,7 +7,7 @@ export function HeroSection() {
   return (
     <section className="relative h-[600px] w-full overflow-hidden">
       <div className="absolute inset-0">
-        <Image src="/dubai-hero.jpg" alt="Dubai Skyline" fill className="object-cover" priority />
+        <Image src="/images/home page title card.jpg" alt="Home Page Title Card" fill className="object-cover" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30"></div>
       </div>
       <div className="relative container h-full flex flex-col justify-center">
