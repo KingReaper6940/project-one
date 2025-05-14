@@ -26,12 +26,14 @@ export function SectorsSection() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {sectors.map((sector, index) => (
-            <div key={index} className="bg-gray-50 p-6 rounded-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-lg flex flex-col items-center justify-center min-h-[180px]">
+            <div key={index} data-aos="fade-up" data-aos-delay={index * 100} className="bg-gray-50 p-6 rounded-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-lg flex flex-col items-center justify-center min-h-[180px]">
               <Building className="h-10 w-10 text-orange-500 mx-auto mb-4" />
               <h3 className="font-medium">{sector}</h3>
             </div>
           ))}
           <button
+            data-aos="fade-up"
+            data-aos-delay={sectors.length * 100}
             onClick={() => {
               const el = document.getElementById('contact');
               if (el) el.scrollIntoView({ behavior: 'smooth' });

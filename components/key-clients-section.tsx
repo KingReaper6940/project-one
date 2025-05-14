@@ -1,7 +1,9 @@
 "use client"
 
 import Image from "next/image"
-import React, { useRef } from "react"
+import React, { useRef, useEffect } from "react"
+import { useDraggableScroll } from "@/hooks/use-draggable-scroll"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 const clientImages = [
   "Screenshot 2025-05-14 at 10.23.30 PM.png",
@@ -26,53 +28,56 @@ const clientImages = [
   "Screenshot 2025-05-14 at 10.29.36 PM.png",
 ]
 
-function useDraggableScroll(ref: React.RefObject<HTMLDivElement | null>) {
-  React.useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    let isDown = false
-    let startX: number, scrollLeft: number
-
-    const onMouseDown = (e: MouseEvent) => {
-      isDown = true
-      el.classList.add('cursor-grabbing')
-      startX = e.pageX - el.offsetLeft
-      scrollLeft = el.scrollLeft
-    }
-    const onMouseLeave = () => {
-      isDown = false
-      el.classList.remove('cursor-grabbing')
-    }
-    const onMouseUp = () => {
-      isDown = false
-      el.classList.remove('cursor-grabbing')
-    }
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isDown) return
-      e.preventDefault()
-      const x = e.pageX - el.offsetLeft
-      const walk = (x - startX) * 1.5 //scroll-fast
-      el.scrollLeft = scrollLeft - walk
-    }
-    el.addEventListener('mousedown', onMouseDown)
-    el.addEventListener('mouseleave', onMouseLeave)
-    el.addEventListener('mouseup', onMouseUp)
-    el.addEventListener('mousemove', onMouseMove)
-    return () => {
-      el.removeEventListener('mousedown', onMouseDown)
-      el.removeEventListener('mouseleave', onMouseLeave)
-      el.removeEventListener('mouseup', onMouseUp)
-      el.removeEventListener('mousemove', onMouseMove)
-    }
-  }, [ref])
-}
-
 export function KeyClientsSection() {
   const scrollRef = useRef<HTMLDivElement>(null)
   useDraggableScroll(scrollRef)
 
+  useEffect(() => {
+    // Only run auto-scroll on mobile
+    if (typeof window === 'undefined') return;
+    const isMobile = window.innerWidth < 768
+    if (!isMobile) return
+
+    const scrollContainer = scrollRef.current
+    if (!scrollContainer) return
+
+    let scrollAmount = 0
+    const scrollSpeed = 1
+    const scrollInterval = 30
+
+    const autoScroll = () => {
+      if (scrollContainer) {
+        scrollAmount += scrollSpeed
+        if (scrollAmount >= scrollContainer.scrollWidth - scrollContainer.clientWidth) {
+          scrollAmount = 0
+        }
+        scrollContainer.scrollLeft = scrollAmount
+      }
+    }
+
+    const intervalId = setInterval(autoScroll, scrollInterval)
+
+    // Pause scrolling on touch
+    const handleTouchStart = () => clearInterval(intervalId)
+    const handleTouchEnd = () => setInterval(autoScroll, scrollInterval)
+
+    scrollContainer.addEventListener('touchstart', handleTouchStart)
+    scrollContainer.addEventListener('touchend', handleTouchEnd)
+
+    return () => {
+      clearInterval(intervalId)
+      scrollContainer.removeEventListener('touchstart', handleTouchStart)
+      scrollContainer.removeEventListener('touchend', handleTouchEnd)
+    }
+  }, [])
+
+  // Scroll handler
+  const scrollByAmount = 220 // px, adjust as needed
+  const scrollLeft = () => scrollRef.current?.scrollBy({ left: -scrollByAmount, behavior: "smooth" })
+  const scrollRight = () => scrollRef.current?.scrollBy({ left: scrollByAmount, behavior: "smooth" })
+
   return (
-    <section id="clients" className="py-16 bg-gray-50">
+    <section id="clients" className="py-16 bg-gray-50 relative">
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Key Clients & Partners</h2>
@@ -80,14 +85,34 @@ export function KeyClientsSection() {
             We are proud to work with leading organizations across various sectors in the UAE.
           </p>
         </div>
+        {/* Left Arrow */}
+        <button
+          type="button"
+          onClick={scrollLeft}
+          className="block md:hidden absolute left-2 top-1/2 z-10 -translate-y-1/2 bg-white rounded-full shadow p-2"
+          aria-label="Scroll left"
+        >
+          <ChevronLeft className="h-6 w-6 text-orange-500" />
+        </button>
+        {/* Right Arrow */}
+        <button
+          type="button"
+          onClick={scrollRight}
+          className="block md:hidden absolute right-2 top-1/2 z-10 -translate-y-1/2 bg-white rounded-full shadow p-2"
+          aria-label="Scroll right"
+        >
+          <ChevronRight className="h-6 w-6 text-orange-500" />
+        </button>
         <div
           ref={scrollRef}
-          className="flex gap-8 items-center overflow-x-auto scrollbar-hide px-2 select-none cursor-grab"
+          className="flex flex-nowrap md:flex-wrap gap-8 items-center overflow-x-auto md:overflow-x-visible scrollbar-hide px-2 select-none cursor-grab"
           style={{ WebkitOverflowScrolling: 'touch' }}
         >
           {clientImages.map((img, idx) => (
             <div
               key={img}
+              data-aos="zoom-in"
+              data-aos-delay={idx * 100}
               className="min-w-[180px] bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer hover:scale-105 hover:border-orange-500 border border-transparent flex-shrink-0"
             >
               <Image

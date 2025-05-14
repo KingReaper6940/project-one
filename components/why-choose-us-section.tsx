@@ -27,7 +27,7 @@ export function WhyChooseUsSection() {
   ]
 
   return (
-    <section id="why-us" className="py-16 bg-orange-500 text-white">
+    <section id="why-us" className="py-16 bg-orange-500 text-white" data-aos="fade-up">
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Why Choose Us</h2>
@@ -40,6 +40,8 @@ export function WhyChooseUsSection() {
           {reasons.map((reason, index) => (
             <div 
               key={index} 
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
               className="bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-white/20 
                 transition-all duration-300 ease-in-out 
                 hover:scale-105 hover:bg-white/15 hover:border-white/40 

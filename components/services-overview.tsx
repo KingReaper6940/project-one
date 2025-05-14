@@ -57,7 +57,7 @@ export function ServicesOverview() {
 
   return (
     <section id="services" className="py-0 w-full">
-      <div className="relative bg-gradient-to-r from-orange-500 to-yellow-400 py-16 mb-16 w-full">
+      <div className="relative bg-gradient-to-r from-orange-500 to-yellow-400 py-16 w-full">
         <div className="max-w-2xl text-white mx-auto px-4">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Services</h2>
           <p className="text-xl">Comprehensive facility management solutions tailored to your specific needs</p>
@@ -67,6 +67,8 @@ export function ServicesOverview() {
         {services.map((service, idx) => (
           <div
             key={service.title}
+            data-aos={idx % 2 === 0 ? "fade-right" : "fade-left"}
+            data-aos-delay={idx * 100}
             className={`grid grid-cols-1 md:grid-cols-2 w-full`}
           >
             {/* Image and text columns alternate based on index */}

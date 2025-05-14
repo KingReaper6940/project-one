@@ -10,7 +10,7 @@ export default function SoftFMServicesPage() {
       title: "General Cleaning & Housekeeping",
       description:
         "Comprehensive cleaning services to maintain a pristine, healthy environment for your facility's occupants and visitors.",
-      image: "/images/cleaning.jpg",
+      image: "/images/soft fm specific page , general cleaning and housekeeping.jpeg",
       features: [
         "Daily office cleaning",
         "Deep cleaning services",
@@ -66,7 +66,7 @@ export default function SoftFMServicesPage() {
       title: "Reception & Front-of-House Services",
       description:
         "Professional front-of-house services to create a positive first impression and ensure smooth visitor management.",
-      image: "/images/reception.jpg",
+      image: "/images/hard fm specific page front desk and reception.jpeg",
       features: [
         "Professional reception staff",
         "Visitor management",
@@ -123,11 +123,7 @@ export default function SoftFMServicesPage() {
                     ))}
                   </div>
                   <div className="mt-6">
-                    <Link href="/contact">
-                      <Button className="bg-orange-500 hover:bg-orange-600">
-                        Request Service <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </Link>
+                    {/* Removed Request Service button */}
                   </div>
                 </div>
               </div>
@@ -145,10 +141,10 @@ export default function SoftFMServicesPage() {
               facility's specific requirements.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact">
+              <Link href="/#contact">
                 <Button className="bg-orange-500 hover:bg-orange-600">Contact Us Today</Button>
               </Link>
-              <Link href="/services">
+              <Link href="/#services">
                 <Button variant="outline" className="border-orange-500 text-orange-500 hover:bg-orange-50">
                   Explore All Services
                 </Button>

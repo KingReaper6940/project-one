@@ -123,11 +123,7 @@ export default function HardFMServicesPage() {
                     ))}
                   </div>
                   <div className="mt-6">
-                    <Link href="/contact">
-                      <Button className="bg-orange-500 hover:bg-orange-600">
-                        Request Service <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </Link>
+                    {/* Removed Request Service button */}
                   </div>
                 </div>
               </div>
@@ -145,10 +141,10 @@ export default function HardFMServicesPage() {
               facility's specific requirements.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact">
+              <Link href="/#contact">
                 <Button className="bg-orange-500 hover:bg-orange-600">Contact Us Today</Button>
               </Link>
-              <Link href="/services">
+              <Link href="/#services">
                 <Button variant="outline" className="border-orange-500 text-orange-500 hover:bg-orange-50">
                   Explore All Services
                 </Button>

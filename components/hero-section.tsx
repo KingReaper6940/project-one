@@ -12,7 +12,7 @@ export function HeroSection() {
         <Image src="/images/home page title card.jpg" alt="Home Page Title Card" fill className="object-cover" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30"></div>
       </div>
-      <div className="relative container h-full flex flex-col justify-center">
+      <div className="relative container h-full flex flex-col justify-center fade-in-on-load">
         <div className="max-w-2xl text-white">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">Total Facilities Management</h1>
           <p className="text-xl mb-8">

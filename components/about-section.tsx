@@ -8,7 +8,7 @@ export function AboutSection() {
     <section id="about" className="py-16 bg-gray-50">
       <div className="container">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+          <div data-aos="fade-up">
             <h2 className="text-3xl font-bold mb-6">About Us</h2>
             <div className="space-y-4">
               <p>
@@ -56,7 +56,7 @@ export function AboutSection() {
               </div>
             </div>
           </div>
-          <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl">
+          <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl" data-aos="fade-left" data-aos-delay="200">
             <Image src="/images/about-company.jpg" alt="Facility Management" fill className="object-cover" />
           </div>
         </div>
