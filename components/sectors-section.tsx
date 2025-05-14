@@ -40,18 +40,18 @@ export function SectorsSection() {
             type="button"
             aria-label="Scroll to Contact Section"
           >
-            <span className="text-orange-500 font-extrabold text-xl mb-2">Contact Us For More</span>
+            <span className="text-orange-500 font-extrabold text-2xl mb-3">Contact Us For More</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="36"
-              height="36"
+              width="48"
+              height="48"
               viewBox="0 0 24 24"
               fill="none"
               stroke="orange"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="h-9 w-9 mt-2"
+              className="h-12 w-12 mt-2"
             >
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
