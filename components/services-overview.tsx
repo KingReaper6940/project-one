@@ -67,10 +67,13 @@ export function ServicesOverview() {
         {services.map((service, idx) => (
           <div
             key={service.title}
-            className={`grid grid-cols-1 md:grid-cols-2 w-full ${idx % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
+            className={`flex flex-col md:grid md:grid-cols-2 w-full px-4 py-8`}
           >
-            {/* Alternate order: even idx text left, odd idx text right */}
-            <div className={`flex flex-col justify-center h-[400px] px-8 py-12 ${idx % 2 === 1 ? 'md:order-2' : 'md:order-1'}`}>
+            {/* Image always first on mobile, alternates on desktop */}
+            <div className={`relative h-[300px] w-full order-1 ${idx % 2 === 1 ? 'md:order-2' : 'md:order-1'}`}>
+              <Image src={service.image} alt={service.alt} fill className="object-cover" />
+            </div>
+            <div className={`flex flex-col justify-center order-2 h-auto md:h-[400px] ${idx % 2 === 1 ? 'md:order-1' : 'md:order-2'}`}>
               <div className="flex items-center mb-4">{service.icon}<h3 className="text-2xl font-bold">{service.title}</h3></div>
               <p className="mb-6 text-gray-700">{service.description}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
@@ -86,9 +89,6 @@ export function ServicesOverview() {
                   Learn More <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
-            </div>
-            <div className={`relative h-[400px] w-full ${idx % 2 === 1 ? 'md:order-1' : 'md:order-2'}`}>
-              <Image src={service.image} alt={service.alt} fill className="object-cover" />
             </div>
           </div>
         ))}

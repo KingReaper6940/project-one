@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -18,16 +20,15 @@ export function HeroSection() {
             across commercial, residential, and industrial sectors.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/services/hard-fm" scroll={true}>
-              <Button className="bg-orange-500 hover:bg-orange-600 text-white">
-                HARD FM SERVICES <ChevronRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link href="/services/soft-fm" scroll={true}>
-              <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white/10">
-                SOFT FM SERVICES <ChevronRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+            <Button
+              className="bg-orange-500 hover:bg-orange-600 text-white"
+              onClick={() => {
+                const el = document.getElementById('services');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Our Services <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
           </div>
         </div>
       </div>
