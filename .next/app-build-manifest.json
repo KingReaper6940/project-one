@@ -15,16 +15,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/services/hard-fm/page.js"
-    ],
-    "/services/soft-fm/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/services/soft-fm/page.js"
-    ],
-    "/services/specialized/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/services/specialized/page.js"
     ]
   }
 }

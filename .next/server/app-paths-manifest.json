@@ -1,6 +1,4 @@
 {
   "/page": "app/page.js",
-  "/services/soft-fm/page": "app/services/soft-fm/page.js",
-  "/services/hard-fm/page": "app/services/hard-fm/page.js",
-  "/services/specialized/page": "app/services/specialized/page.js"
+  "/services/hard-fm/page": "app/services/hard-fm/page.js"
 }

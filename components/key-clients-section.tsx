@@ -30,23 +30,24 @@ const clientImages = [
 
 export function KeyClientsSection() {
   const scrollRef = useRef<HTMLDivElement>(null)
-  useDraggableScroll(scrollRef)
+  const autoScrollInterval = useRef<NodeJS.Timeout | null>(null)
+  const resumeTimeout = useRef<NodeJS.Timeout | null>(null)
+  const isDragging = useRef(false)
 
+  // --- Auto-scroll logic ---
   useEffect(() => {
-    // Only run auto-scroll on mobile
     if (typeof window === 'undefined') return;
     const isMobile = window.innerWidth < 768
     if (!isMobile) return
-
     const scrollContainer = scrollRef.current
     if (!scrollContainer) return
 
-    let scrollAmount = 0
+    let scrollAmount = scrollContainer.scrollLeft
     const scrollSpeed = 1
     const scrollInterval = 30
 
     const autoScroll = () => {
-      if (scrollContainer) {
+      if (!isDragging.current) {
         scrollAmount += scrollSpeed
         if (scrollAmount >= scrollContainer.scrollWidth - scrollContainer.clientWidth) {
           scrollAmount = 0
@@ -55,26 +56,97 @@ export function KeyClientsSection() {
       }
     }
 
-    const intervalId = setInterval(autoScroll, scrollInterval)
+    autoScrollInterval.current = setInterval(autoScroll, scrollInterval)
 
-    // Pause scrolling on touch
-    const handleTouchStart = () => clearInterval(intervalId)
-    const handleTouchEnd = () => setInterval(autoScroll, scrollInterval)
+    // Pause/resume helpers
+    const pauseAutoScroll = () => {
+      if (autoScrollInterval.current) clearInterval(autoScrollInterval.current)
+      if (resumeTimeout.current) clearTimeout(resumeTimeout.current)
+    }
+    const resumeAutoScroll = (delay = 800) => {
+      if (autoScrollInterval.current) clearInterval(autoScrollInterval.current)
+      if (resumeTimeout.current) clearTimeout(resumeTimeout.current)
+      resumeTimeout.current = setTimeout(() => {
+        autoScrollInterval.current = setInterval(autoScroll, scrollInterval)
+      }, delay)
+    }
+
+    // Touch/drag events
+    const handleTouchStart = () => {
+      isDragging.current = true
+      pauseAutoScroll()
+    }
+    const handleTouchEnd = () => {
+      isDragging.current = false
+      resumeAutoScroll()
+    }
+    const handleMouseDown = () => {
+      isDragging.current = true
+      pauseAutoScroll()
+    }
+    const handleMouseUp = () => {
+      isDragging.current = false
+      resumeAutoScroll()
+    }
 
     scrollContainer.addEventListener('touchstart', handleTouchStart)
     scrollContainer.addEventListener('touchend', handleTouchEnd)
+    scrollContainer.addEventListener('mousedown', handleMouseDown)
+    scrollContainer.addEventListener('mouseup', handleMouseUp)
 
     return () => {
-      clearInterval(intervalId)
+      if (autoScrollInterval.current) clearInterval(autoScrollInterval.current)
+      if (resumeTimeout.current) clearTimeout(resumeTimeout.current)
       scrollContainer.removeEventListener('touchstart', handleTouchStart)
       scrollContainer.removeEventListener('touchend', handleTouchEnd)
+      scrollContainer.removeEventListener('mousedown', handleMouseDown)
+      scrollContainer.removeEventListener('mouseup', handleMouseUp)
     }
   }, [])
 
-  // Scroll handler
+  // --- Arrow scroll handlers ---
   const scrollByAmount = 220 // px, adjust as needed
-  const scrollLeft = () => scrollRef.current?.scrollBy({ left: -scrollByAmount, behavior: "smooth" })
-  const scrollRight = () => scrollRef.current?.scrollBy({ left: scrollByAmount, behavior: "smooth" })
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -scrollByAmount, behavior: "smooth" })
+      // Pause auto-scroll and resume after
+      if (autoScrollInterval.current) clearInterval(autoScrollInterval.current)
+      if (resumeTimeout.current) clearTimeout(resumeTimeout.current)
+      resumeTimeout.current = setTimeout(() => {
+        autoScrollInterval.current = setInterval(() => {
+          if (scrollRef.current) {
+            let scrollAmount = scrollRef.current.scrollLeft + 1
+            if (scrollAmount >= scrollRef.current.scrollWidth - scrollRef.current.clientWidth) {
+              scrollAmount = 0
+            }
+            scrollRef.current.scrollLeft = scrollAmount
+          }
+        }, 30)
+      }, 800)
+    }
+  }
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: scrollByAmount, behavior: "smooth" })
+      // Pause auto-scroll and resume after
+      if (autoScrollInterval.current) clearInterval(autoScrollInterval.current)
+      if (resumeTimeout.current) clearTimeout(resumeTimeout.current)
+      resumeTimeout.current = setTimeout(() => {
+        autoScrollInterval.current = setInterval(() => {
+          if (scrollRef.current) {
+            let scrollAmount = scrollRef.current.scrollLeft + 1
+            if (scrollAmount >= scrollRef.current.scrollWidth - scrollRef.current.clientWidth) {
+              scrollAmount = 0
+            }
+            scrollRef.current.scrollLeft = scrollAmount
+          }
+        }, 30)
+      }, 800)
+    }
+  }
+
+  // --- Drag-to-scroll (useDraggableScroll) ---
+  useDraggableScroll(scrollRef)
 
   return (
     <section id="clients" className="py-16 bg-gray-50 relative">
