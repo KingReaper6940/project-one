@@ -33,22 +33,6 @@ Deployed via [Vercel](https://vercel.com)
 
 ---
 
-## 📂 Project Structure (simplified)
-
-```
-project-one/
-├── components/       # Reusable UI components
-├── pages/            # Routes and page-level components
-│   ├── index.js      # Homepage
-│   ├── about.js      # About page
-│   ├── contact.js    # Contact form
-├── public/           # Static assets (images, icons, etc.)
-├── styles/           # Global and module-based styles
-├── package.json      # Project metadata and dependencies
-└── README.md         # You're here!
-```
-
----
 
 ## 🚀 Getting Started
 
