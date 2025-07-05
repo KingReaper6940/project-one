@@ -11,12 +11,7 @@ Deployed via [Vercel](https://vercel.com)
 
 ---
 
-## 🖼️ Screenshot
 
-![Website Preview](https://project-one-j8f2-adqr6d70e-kingreaper6940s-projects.vercel.app/screenshot.png)  
-*Replace this URL with your actual image if you upload one to the public directory*
-
----
 
 ## ✨ Features
 
